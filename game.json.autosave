@@ -13,7 +13,7 @@
     "macExecutableFilename": "",
     "orientation": "landscape",
     "packageName": "com.example.gamename",
-    "projectFile": "C:\\Development\\DEV\\Others\\0001\\game.json",
+    "projectFile": "C:\\Development\\DEV\\Others\\platformer-gdev\\game.json",
     "scaleMode": "linear",
     "sizeOnStartupMode": "adaptWidth",
     "useExternalSourceFiles": false,
@@ -324,6 +324,15 @@
         "name": "assets\\snake\\tile024.png",
         "smoothed": true,
         "userAdded": false
+      },
+      {
+        "alwaysLoaded": false,
+        "file": "NewObject-1-0.png",
+        "kind": "image",
+        "metadata": "",
+        "name": "NewObject-1-0.png",
+        "smoothed": true,
+        "userAdded": true
       }
     ],
     "resourceFolders": []
@@ -356,7 +365,7 @@
         "gridWidth": 16,
         "snap": true,
         "windowMask": true,
-        "zoomFactor": 2.224
+        "zoomFactor": 1.672
       },
       "objectsGroups": [],
       "variables": [],
@@ -394,13 +403,13 @@
         {
           "angle": 0,
           "customSize": true,
-          "height": 16,
+          "height": 64,
           "layer": "",
           "locked": false,
-          "name": "Platform",
-          "width": 48,
-          "x": 96,
-          "y": 544,
+          "name": "ZoomToArea",
+          "width": 160,
+          "x": 112,
+          "y": 496,
           "zOrder": 3,
           "numberProperties": [],
           "stringProperties": [],
@@ -408,14 +417,14 @@
         },
         {
           "angle": 0,
-          "customSize": false,
-          "height": 0,
+          "customSize": true,
+          "height": 16,
           "layer": "",
           "locked": false,
-          "name": "Platform",
-          "width": 0,
+          "name": "ZoomToAreaLabel",
+          "width": 64,
           "x": 112,
-          "y": 528,
+          "y": 496,
           "zOrder": 4,
           "numberProperties": [],
           "stringProperties": [],
@@ -431,6 +440,16 @@
           "variables": [],
           "behaviors": [
             {
+              "name": "AdvancedPlatformCamera",
+              "type": "AdvancedPlatformCamera::ZoomLerp",
+              "zoomInterpolation": 0.05,
+              "zoomTo": 3,
+              "zoomIn": 3,
+              "zoomOut": 2
+            },
+            {
+              "name": "PlatformerObject",
+              "type": "PlatformBehavior::PlatformerObjectBehavior",
               "acceleration": 1500,
               "canGrabPlatforms": false,
               "deceleration": 1500,
@@ -439,10 +458,8 @@
               "jumpSpeed": 300,
               "maxFallingSpeed": 700,
               "maxSpeed": 250,
-              "name": "PlatformerObject",
               "roundCoordinates": true,
               "slopeMaxAngle": 60,
-              "type": "PlatformBehavior::PlatformerObjectBehavior",
               "xGrabTolerance": 10,
               "yGrabOffset": 0
             }
@@ -1290,13 +1307,71 @@
           "variables": [],
           "behaviors": [
             {
-              "canBeGrabbed": true,
               "name": "Platform",
-              "platformType": "NormalPlatform",
               "type": "PlatformBehavior::PlatformBehavior",
+              "canBeGrabbed": true,
+              "platformType": "NormalPlatform",
               "yGrabOffset": 0
             }
           ]
+        },
+        {
+          "name": "ZoomToArea",
+          "tags": "",
+          "type": "Sprite",
+          "updateIfNotVisible": false,
+          "variables": [],
+          "behaviors": [],
+          "animations": [
+            {
+              "name": "NewObject",
+              "useMultipleDirections": false,
+              "directions": [
+                {
+                  "looping": false,
+                  "timeBetweenFrames": 0.08,
+                  "sprites": [
+                    {
+                      "hasCustomCollisionMask": false,
+                      "image": "NewObject-1-0.png",
+                      "points": [],
+                      "originPoint": {
+                        "name": "origine",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "centerPoint": {
+                        "automatic": true,
+                        "name": "centre",
+                        "x": 0,
+                        "y": 0
+                      },
+                      "customCollisionMask": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "bold": false,
+          "italic": false,
+          "name": "ZoomToAreaLabel",
+          "smoothed": true,
+          "tags": "",
+          "type": "TextObject::Text",
+          "underlined": false,
+          "variables": [],
+          "behaviors": [],
+          "string": "ZoomTo Test Area",
+          "font": "",
+          "characterSize": 10,
+          "color": {
+            "b": 8,
+            "g": 8,
+            "r": 217
+          }
         }
       ],
       "events": [
@@ -1376,36 +1451,24 @@
             {
               "type": {
                 "inverted": false,
-                "value": "ModVarGlobal"
-              },
-              "parameters": [
-                "zoomCamera",
-                "=",
-                "lerp(GlobalVariable(zoomCamera), 2.5, .1)"
-              ],
-              "subInstructions": []
-            },
-            {
-              "type": {
-                "inverted": false,
-                "value": "ZoomCamera"
-              },
-              "parameters": [
-                "",
-                "GlobalVariable(zoomCamera)",
-                "",
-                ""
-              ],
-              "subInstructions": []
-            },
-            {
-              "type": {
-                "inverted": false,
                 "value": "SetAnimationName"
               },
               "parameters": [
                 "Player",
                 "\"Idle\""
+              ],
+              "subInstructions": []
+            },
+            {
+              "type": {
+                "inverted": false,
+                "value": "AdvancedPlatformCamera::ZoomIn"
+              },
+              "parameters": [
+                "",
+                "3",
+                ".1",
+                ""
               ],
               "subInstructions": []
             }
@@ -1464,23 +1527,9 @@
                 {
                   "type": {
                     "inverted": false,
-                    "value": "ModVarGlobal"
+                    "value": "AdvancedPlatformCamera::ZoomOut"
                   },
                   "parameters": [
-                    "zoomCamera",
-                    "=",
-                    "lerp(GlobalVariable(zoomCamera), 3, .1)"
-                  ],
-                  "subInstructions": []
-                },
-                {
-                  "type": {
-                    "inverted": false,
-                    "value": "ZoomCamera"
-                  },
-                  "parameters": [
-                    "",
-                    "GlobalVariable(zoomCamera)",
                     "",
                     ""
                   ],
@@ -1563,20 +1612,15 @@
             {
               "type": {
                 "inverted": false,
-                "value": "KeyPressed"
+                "value": "CollisionNP"
               },
               "parameters": [
+                "Player",
+                "ZoomToArea",
                 "",
-                "RControl"
+                "",
+                ""
               ],
-              "subInstructions": []
-            },
-            {
-              "type": {
-                "inverted": false,
-                "value": "BuiltinCommonInstructions::Once"
-              },
-              "parameters": [],
               "subInstructions": []
             }
           ],
@@ -1584,11 +1628,13 @@
             {
               "type": {
                 "inverted": false,
-                "value": "SetAnimationName"
+                "value": "AdvancedPlatformCamera::KeepZoom"
               },
               "parameters": [
-                "Player",
-                "\"Attack01\""
+                "",
+                "1",
+                ".1",
+                ""
               ],
               "subInstructions": []
             }
@@ -1602,21 +1648,16 @@
           "conditions": [
             {
               "type": {
-                "inverted": false,
-                "value": "KeyReleased"
+                "inverted": true,
+                "value": "CollisionNP"
               },
               "parameters": [
+                "Player",
+                "ZoomToArea",
                 "",
-                "RControl"
+                "",
+                ""
               ],
-              "subInstructions": []
-            },
-            {
-              "type": {
-                "inverted": false,
-                "value": "BuiltinCommonInstructions::Once"
-              },
-              "parameters": [],
               "subInstructions": []
             }
           ],
@@ -1624,11 +1665,11 @@
             {
               "type": {
                 "inverted": false,
-                "value": "SetAnimationName"
+                "value": "AdvancedPlatformCamera::UnkeepZoom"
               },
               "parameters": [
-                "Player",
-                "\"Attack02\""
+                "",
+                ""
               ],
               "subInstructions": []
             }
@@ -1657,6 +1698,10 @@
       ],
       "behaviorsSharedData": [
         {
+          "name": "AdvancedPlatformCamera",
+          "type": "AdvancedPlatformCamera::ZoomLerp"
+        },
+        {
           "name": "Platform",
           "type": "PlatformBehavior::PlatformBehavior"
         },
@@ -1668,7 +1713,367 @@
     }
   ],
   "externalEvents": [],
-  "eventsFunctionsExtensions": [],
+  "eventsFunctionsExtensions": [
+    {
+      "author": "NicolaLC",
+      "description": "Attach an advanced camera behaviour to a platformer object, you can ZoomIn and ZoomOut the camera using an interpolation range.",
+      "extensionNamespace": "",
+      "fullName": "AdvancedPlatformCamera",
+      "name": "AdvancedPlatformCamera",
+      "shortDescription": "Attach an advanced camera behaviour to a platformer object",
+      "tags": "camera, platformer. lerp",
+      "version": "1.0.0.0",
+      "eventsFunctions": [
+        {
+          "description": "Zoom the camera OUT with effect",
+          "fullName": "ZoomOut",
+          "functionType": "Action",
+          "name": "ZoomOut",
+          "sentence": "Zoom the camera OUT with interpolation effect",
+          "events": [
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": true,
+                    "value": "VarScene"
+                  },
+                  "parameters": [
+                    "apc_skipZoomActions",
+                    "=",
+                    "1"
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarScene"
+                  },
+                  "parameters": [
+                    "apc_currentZoom",
+                    "=",
+                    "lerp(Variable(apc_currentZoom), Variable(apc_zoomOut), Variable(apc_zoomInterpolation))"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ZoomCamera"
+                  },
+                  "parameters": [
+                    "",
+                    "Variable(apc_currentZoom)",
+                    "",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            }
+          ],
+          "parameters": [],
+          "objectGroups": []
+        },
+        {
+          "description": "Zoom the camera In with effect",
+          "fullName": "ZoomIn",
+          "functionType": "Action",
+          "name": "ZoomIn",
+          "sentence": "Zoom the camera IN with interpolation effect",
+          "events": [
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "inverted": true,
+                    "value": "VarScene"
+                  },
+                  "parameters": [
+                    "apc_skipZoomActions",
+                    "=",
+                    "1"
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarScene"
+                  },
+                  "parameters": [
+                    "apc_currentZoom",
+                    "=",
+                    "lerp(Variable(apc_currentZoom), Variable(apc_zoomIn), Variable(apc_zoomInterpolation))"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ZoomCamera"
+                  },
+                  "parameters": [
+                    "",
+                    "Variable(apc_currentZoom)",
+                    "",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            }
+          ],
+          "parameters": [],
+          "objectGroups": []
+        },
+        {
+          "description": "Zoom the camera To target static zoom with effect",
+          "fullName": "ZoomTo",
+          "functionType": "Action",
+          "name": "KeepZoom",
+          "sentence": "Zoom the camera to _PARAM1_ with interpolation value _PARAM2_",
+          "events": [
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarScene"
+                  },
+                  "parameters": [
+                    "apc_skipZoomActions",
+                    "=",
+                    "1"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarScene"
+                  },
+                  "parameters": [
+                    "apc_currentZoom",
+                    "=",
+                    "lerp(Variable(apc_currentZoom), 1, Variable(apc_zoomInterpolation))"
+                  ],
+                  "subInstructions": []
+                },
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ZoomCamera"
+                  },
+                  "parameters": [
+                    "",
+                    "Variable(apc_currentZoom)",
+                    "",
+                    ""
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            }
+          ],
+          "parameters": [
+            {
+              "codeOnly": false,
+              "defaultValue": "",
+              "description": "The target camera zoom",
+              "name": "targetZoom",
+              "optional": false,
+              "supplementaryInformation": "",
+              "type": "expression"
+            },
+            {
+              "codeOnly": false,
+              "defaultValue": "",
+              "description": "The zoom interpolation value",
+              "name": "zoomInterpolation",
+              "optional": false,
+              "supplementaryInformation": "",
+              "type": "expression"
+            }
+          ],
+          "objectGroups": []
+        },
+        {
+          "description": "Remove static zoom",
+          "fullName": "",
+          "functionType": "Action",
+          "name": "UnkeepZoom",
+          "sentence": "Remove static zoom",
+          "events": [
+            {
+              "disabled": false,
+              "folded": false,
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [],
+              "actions": [
+                {
+                  "type": {
+                    "inverted": false,
+                    "value": "ModVarScene"
+                  },
+                  "parameters": [
+                    "apc_skipZoomActions",
+                    "=",
+                    "0"
+                  ],
+                  "subInstructions": []
+                }
+              ],
+              "events": []
+            }
+          ],
+          "parameters": [],
+          "objectGroups": []
+        }
+      ],
+      "eventsBasedBehaviors": [
+        {
+          "description": "Lerp the camera zoom between current zoom and target zoom using an interpolation value",
+          "fullName": "Lerp Camera Zoom",
+          "name": "ZoomLerp",
+          "objectType": "Sprite",
+          "eventsFunctions": [
+            {
+              "description": "",
+              "fullName": "",
+              "functionType": "Action",
+              "name": "onCreated",
+              "sentence": "",
+              "events": [
+                {
+                  "disabled": false,
+                  "folded": false,
+                  "type": "BuiltinCommonInstructions::Standard",
+                  "conditions": [],
+                  "actions": [
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "ModVarScene"
+                      },
+                      "parameters": [
+                        "apc_currentZoom",
+                        "=",
+                        "1"
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "ModVarScene"
+                      },
+                      "parameters": [
+                        "apc_zoomIn",
+                        "=",
+                        "Object.Behavior::PropertyzoomIn()"
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "ModVarScene"
+                      },
+                      "parameters": [
+                        "apc_zoomInterpolation",
+                        "=",
+                        "Object.Behavior::PropertyzoomInterpolation()"
+                      ],
+                      "subInstructions": []
+                    },
+                    {
+                      "type": {
+                        "inverted": false,
+                        "value": "ModVarScene"
+                      },
+                      "parameters": [
+                        "apc_zoomOut",
+                        "=",
+                        "Object.Behavior::PropertyzoomOut()"
+                      ],
+                      "subInstructions": []
+                    }
+                  ],
+                  "events": []
+                }
+              ],
+              "parameters": [
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Object",
+                  "name": "Object",
+                  "optional": false,
+                  "supplementaryInformation": "Sprite",
+                  "type": "object"
+                },
+                {
+                  "codeOnly": false,
+                  "defaultValue": "",
+                  "description": "Behavior",
+                  "name": "Behavior",
+                  "optional": false,
+                  "supplementaryInformation": "AdvancedPlatformCamera::ZoomLerp",
+                  "type": "behavior"
+                }
+              ],
+              "objectGroups": []
+            }
+          ],
+          "propertyDescriptors": [
+            {
+              "value": "2",
+              "type": "Number",
+              "label": "The target zoom in",
+              "extraInformation": [],
+              "hidden": false,
+              "name": "zoomIn"
+            },
+            {
+              "value": ".1",
+              "type": "Number",
+              "label": "The zoom change interpolation value (between 0 and 1)",
+              "extraInformation": [],
+              "hidden": false,
+              "name": "zoomInterpolation"
+            },
+            {
+              "value": "1",
+              "type": "Number",
+              "label": "The target zoom out",
+              "extraInformation": [],
+              "hidden": false,
+              "name": "zoomOut"
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "externalLayouts": [],
   "externalSourceFiles": []
 }
