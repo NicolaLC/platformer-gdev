@@ -1725,7 +1725,7 @@
         "gridWidth": 16,
         "snap": true,
         "windowMask": true,
-        "zoomFactor": 1.696
+        "zoomFactor": 1.288
       },
       "objectsGroups": [],
       "variables": [],
@@ -3129,7 +3129,7 @@
               "parameters": [
                 "Player",
                 "AdvancedPlatformCamera",
-                "2.25",
+                "2",
                 ".1",
                 ""
               ],
@@ -3260,7 +3260,7 @@
                   "parameters": [
                     "Player",
                     "AdvancedPlatformCamera",
-                    "2",
+                    "1.75",
                     ".1",
                     ""
                   ],
