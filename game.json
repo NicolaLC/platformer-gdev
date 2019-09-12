@@ -5305,7 +5305,7 @@
               "colorR": 74,
               "creationTime": 0,
               "disabled": false,
-              "folded": true,
+              "folded": false,
               "name": "Player",
               "source": "",
               "type": "BuiltinCommonInstructions::Group",
@@ -5688,7 +5688,7 @@
                       },
                       "parameters": [
                         "",
-                        "\"Prototype\""
+                        "CurrentSceneName()"
                       ],
                       "subInstructions": []
                     }
@@ -5879,7 +5879,7 @@
                       },
                       "parameters": [
                         "",
-                        "\"Prototype\""
+                        "CurrentSceneName()"
                       ],
                       "subInstructions": []
                     }

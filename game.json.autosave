@@ -5467,7 +5467,7 @@
                           "parameters": [
                             "Player",
                             "AdvancedPlatformCamera",
-                            "5",
+                            "2",
                             ".1",
                             ""
                           ],
@@ -5688,7 +5688,7 @@
                       },
                       "parameters": [
                         "",
-                        "\"Prototype\""
+                        "CurrentSceneName()"
                       ],
                       "subInstructions": []
                     }
@@ -5879,7 +5879,7 @@
                       },
                       "parameters": [
                         "",
-                        "\"Prototype\""
+                        "CurrentSceneName()"
                       ],
                       "subInstructions": []
                     }
