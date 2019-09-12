@@ -6044,7 +6044,7 @@
               "type": "Number",
               "label": "the current x position of the object",
               "extraInformation": [],
-              "hidden": false,
+              "hidden": true,
               "name": "mp_x"
             },
             {
@@ -6052,7 +6052,7 @@
               "type": "Number",
               "label": "the current y position of the object",
               "extraInformation": [],
-              "hidden": false,
+              "hidden": true,
               "name": "mp_y"
             }
           ]
